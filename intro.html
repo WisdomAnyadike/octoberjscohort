@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div>
+        <label for="provider"> Pick Provider: </label>
+        <select name="provider" id="provider">
+            <option value=""> choose provider </option>
+            <option value="mtn"> MTN </option>
+            <option value="glo"> GLO </option>
+            <option value="airtel"> AIRTEL</option>
+            <option value="9mobile"> 9MOBILE </option>
+        </select>
+    </div>
+
+    <div>
+        <label for="amount"> Pick Amount: </label>
+        <select name="amount" id="amount">
+            <option value=""> choose amount </option>
+            <option value="100"> 100 </option>
+            <option value="200"> 200 </option>
+            <option value="500"> 500</option>
+            <option value="1000"> 1000 </option>
+        </select>
+    </div>
+
+    <button onclick="generatePin()">generate pin</button>
+    <p> Pin: <span id="thePin"> no pin yet.. </span></p>
+
+
+
+    <div><label for="loadcard"> Load Card: </label>
+        <input type="text" id="loadcard" value="*311*pin#">
+        <button onclick="loadRechargeCard()"> Load Card </button>
+    </div>
+
+    <p>balance: </p>
+
+</body>
+
+</html>
+<script>
+    let cards = []
+   
+
+    function generatePin() {
+        let provider = document.getElementById('provider').value
+        let amount = document.getElementById('amount').value
+        let thePin = document.getElementById('thePin')
+        if (!provider || !amount) {
+            alert('all fields are mandatory')
+        } else {
+            let pin = ''
+
+            for (let index = 0; index <= 11; index++) {
+                let randomNum = Math.floor(Math.random() * 10)
+                pin = pin + randomNum
+            }
+
+            thePin.innerHTML = pin
+
+
+            let card = {
+                pin,
+                provider,
+                amount ,
+               
+            }
+
+            cards.push(card)
+            console.log(cards);
+
+
+
+        }
+
+
+
+    }
+
+    function loadRechargeCard() {
+        let twelveDigit = loadcard.value.trim().slice(5, 17)
+        if (loadcard.value.trim() !== `*311*${twelveDigit}#`) {
+            alert('invalid format')
+        } else {
+            console.log(twelveDigit); //764783938293789
+
+            let foundCard
+
+            for (let index = 0; index < cards.length; index++) {
+                if (cards[index].pin === twelveDigit) {
+                    foundCard = cards[index]
+                    break
+                }
+            }
+
+
+            if (!foundCard) {
+                alert('invalid card')
+            } else {
+                alert(`you have successfully recharged ${foundCard.provider} of ${foundCard.amount} `)
+            }
+
+
+
+        }
+
+
+
+
+
+
+
+
+    }
+
+
+
+    let arr = [
+        { pin: '234567898376567', provider: 'mtn', amount: '1000' },
+        { pin: '764783938293789', provider: 'glo', amount: '200' },
+        { pin: '325320023889200', provider: 'airtel', amount: '500' },
+    ]
+
+    console.log(arr[2]);
+
+</script>
