@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+</body>
+
+</html>
+<script>
+
+    function generateColor(colorType) {
+        if (colorType.toLowerCase() === 'rgb') {
+            function num() {
+                return Math.floor(Math.random() * 256) //0-255
+            }
+
+            return `rgb(${num()}, ${num()}, ${num()})`
+        } else if (colorType.toLowerCase() === 'hexa') {
+            let hexaColor = '#'
+            let vals = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', '1', '2', '3', '4', '5']
+
+            for (let index = 0; index < 6; index++) {
+                let randomPick = Math.floor(Math.random() * vals.length) // 0-9
+                hexaColor = hexaColor + vals[randomPick]
+
+            }
+
+            return hexaColor
+        } else {
+            return 'please enter a valid color type'
+        }
+
+
+    }
+
+    console.log(generateColor('hexa'));
+
+
+
+
+
+    function sayName(name) {
+        console.log(name);
+    }
+
+    // let myName = 'wisdom'
+    sayName('david')
+
+    sayName('wisdom')
+
+
+    function holdNum5() {
+        return 5
+    }
+
+    console.log(holdNum5());
+    let total = 34 + holdNum5()//5
+
+
+
+    let arr = ['rice', 'beans', 'dodo']
+
+    arr[2]
+
+
+</script>
