@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+</body>
+
+</html>
+<script>
+    // array methods , higher order functions , loops
+    // forEach map find findIndex filter every some reduce
+
+    let num = 200.53789376378
+    num = num.toFixed(2)
+
+
+    let arr = ['orange', 'watermelon', 'grapes']
+
+    // foreach loop returns undefined no matter what , no special abilities, its just a loop
+    let myLoop = arr.forEach((fruit, i, array) => {
+
+        console.log(i, fruit, array);
+
+    })
+
+    console.log(myLoop);
+
+    // map : twin brother to foreach but has special abilities
+
+    let nums = [1, 2, 3, 4, 5, 6]
+
+    // [ 2 , 4 , 6 , 8 , 10 , 12]
+
+    let newNumsArr = nums.map((n, i, arr) => {
+
+        return n * 2
+    })
+
+    console.log(newNumsArr);
+
+
+    // find , returns a member of the array you're looping through and trying to find or undefined
+
+    let students = [
+        {
+            name: 'evans',
+            age: 25
+        },
+        {
+            name: 'richard',
+            age: 16
+        },
+        {
+            name: 'mercy',
+            age: 17
+        }
+    ]
+
+
+    let foundStudent = students.find((student, i) => { return student.name === 'mercy' })
+
+    console.log(foundStudent);
+
+
+    // findIndex - it returns the index of the member of the array  that you are looking for , if it doesnt find it , it returns -1
+
+    let foundStudentIndex = students.findIndex((student, i) => { return student.name === 'davido' })
+
+    console.log(foundStudentIndex);
+
+
+
+    // filter - it return an array of only value that meet a specific condition
+
+    let arr2 = ['2', 2, 1, '1', '5', 5]
+
+    let Numbers = arr2.filter((n, i) => {
+        return typeof n === "number"
+    })
+
+    console.log(Numbers);
+
+
+    let five = "5"
+    console.log(typeof five);
+
+
+    // every - return true when every member of the array meets a condition and false when at least one member fails to meet a condition
+
+
+    let numbers = [1, 2, 4, 5, 5, 6, 8, undefined, 'fghsjhgs']
+
+    let isEveryMemberANumber = numbers.every((num, i) => {
+        return typeof num === "number"
+    })
+
+
+    function giveMeNumbersArr() {
+        if (isEveryMemberANumber === false) {
+
+            let finalNumbers = numbers.filter((num) => {
+                return typeof num === "number"
+            })
+
+            return finalNumbers
+        } else {
+            return numbers
+        }
+
+    }
+
+    console.log(giveMeNumbersArr());
+
+    // some - return true when at least one member of the array meets a condition and false when every single member fails to meet a condition
+
+
+    let isAtLeastOneMemberANumber = numbers.some((num, i) => {
+        return typeof num === "object"
+    })
+
+    console.log(isAtLeastOneMemberANumber);
+
+
+    // function hold5(params) {
+
+    // }
+
+    // let fiveaddedtofive = hold5() + 5
+
+    let myArr = new Array()
+    console.log(Array.isArray('fghjk'));
+
+</script>
