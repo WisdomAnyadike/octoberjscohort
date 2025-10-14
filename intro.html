@@ -40,14 +40,36 @@
         <button onclick="loadRechargeCard()"> Load Card </button>
     </div>
 
-    <p>balance: </p>
+    <p>mtn balance: <span id="mtnBalance"> </span> </p>
+    <p> glo balance: <span id="gloBalance"> </span> </p>
+    <p> 9mobile balance: <span id="nineMobileBalance"> </span> </p>
+    <p> airtel balance: <span id="airtelBalance"> </span> </p>
 
 </body>
 
 </html>
 <script>
     let cards = []
-   
+
+    let balances = {
+        mtnBalance: 0,
+        gloBalance: 0,
+        nineMobileBalance: 0,
+        airtelBalance: 0
+    }
+
+
+
+    function displayBalance() {
+
+        for (const key in balances) {
+            document.getElementById(key).innerHTML = balances[key]
+        }
+
+    }
+
+    displayBalance()
+
 
     function generatePin() {
         let provider = document.getElementById('provider').value
@@ -69,15 +91,12 @@
             let card = {
                 pin,
                 provider,
-                amount ,
-               
+                amount,
+                isUsed: false
             }
 
             cards.push(card)
             console.log(cards);
-
-
-
         }
 
 
@@ -88,7 +107,11 @@
         let twelveDigit = loadcard.value.trim().slice(5, 17)
         if (loadcard.value.trim() !== `*311*${twelveDigit}#`) {
             alert('invalid format')
-        } else {
+        }
+
+
+
+        else {
             console.log(twelveDigit); //764783938293789
 
             let foundCard
@@ -103,9 +126,28 @@
 
             if (!foundCard) {
                 alert('invalid card')
-            } else {
-                alert(`you have successfully recharged ${foundCard.provider} of ${foundCard.amount} `)
+                return
             }
+
+            if (foundCard.isUsed) {
+                alert('this card has already been used')
+                return
+            }
+
+            alert(`you have successfully recharged ${foundCard.provider} of ${foundCard.amount} `)
+            foundCard.isUsed = true
+
+            if (foundCard.provider === 'mtn') {
+                balances.mtnBalance += +foundCard.amount
+            } else if (foundCard.provider === 'glo') {
+                balances.gloBalance += +foundCard.amount
+            } else if (foundCard.provider === 'airtel') {
+                balances.airtelBalance += +foundCard.amount
+            } else {
+                balances.nineMobileBalance += +foundCard.amount
+            }
+
+            displayBalance()
 
 
 
@@ -113,21 +155,18 @@
 
 
 
-
-
-
-
-
     }
 
 
 
-    let arr = [
-        { pin: '234567898376567', provider: 'mtn', amount: '1000' },
-        { pin: '764783938293789', provider: 'glo', amount: '200' },
-        { pin: '325320023889200', provider: 'airtel', amount: '500' },
-    ]
 
-    console.log(arr[2]);
+    let myObj = { pin: '234567898376567', provider: 'mtn', amount: '1000' }
+
+    for (const key in myObj) {
+        console.log(key, myObj[key]);
+    }
+
+
+
 
 </script>

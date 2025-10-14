@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"
+        integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+    <title>Document</title>
+    <link rel="stylesheet" href="./css/signup.css">
+</head>
+
+<body>
+    <form class="form">
+        <h1>Sign Up</h1>
+        <div class="form-group">
+            <input type="text" placeholder=" " id="namee">
+            <label for="name">Name</label>
+            <div class="error">
+                <i class="fas fa-exclamation-circle"></i>
+                Error encountered!
+            </div>
+        </div>
+        <div class="form-group">
+            <input type="email" placeholder=" " id="email">
+            <label for="email">Email</label>
+            <div class="error">
+                <i class="fas fa-exclamation-circle"></i>
+            </div>
+        </div>
+        <div class="form-group">
+            <input type="password" placeholder=" " id="password">
+            <label for="password">Password</label>
+            <div class="error">
+                <i class="fas fa-exclamation-circle"></i>
+            </div>
+        </div>
+        <div class="form-group">
+            <input type="password" placeholder=" " id="confirmpassword">
+            <label for="confirm">Confirm</label>
+            <div class="error">
+                <i class="fas fa-exclamation-circle"></i>
+            </div>
+        </div>
+
+        <div style="margin-left: 40px; color: white;">
+            <input id="agree" type="checkbox">
+            <label for="agree"> : agree to terms and conditions </label>
+        </div>
+
+
+
+        <input type="button" value="Sign Up" onclick="submitForm()">
+        <div class="form-bottom">
+            <a href="#">Forgot Password?</a>
+        </div>
+    </form>
+</body>
+
+</html>
+<script>
+    let database = []
+
+    function submitForm(params) {
+
+        let usersName = namee.value.trim()
+        let usersMail = email.value.trim()
+        let usersPassword = password.value.trim()
+        let usersConfirm = confirmpassword.value.trim()
+
+
+        if (!usersName || !usersMail || !usersPassword || !usersConfirm) {
+            alert('all fields are mandatory')
+        }
+        else if (database.find((userObj, i) => { return userObj.email === usersMail })) {
+            alert('user already exists')
+        } else if (usersPassword !== usersConfirm) {
+            alert('passwords do not match')
+        } else if (usersPassword.length < 8) {
+            alert('passwords must be at least 8 characters')
+        } else if (!agree.checked) {
+            alert("please agree to terms and conditions")
+        }
+
+
+        else {
+
+
+            let userObj = {
+                username: usersName,
+                email: usersMail,
+                password: usersPassword
+            }
+
+            database.push(userObj)
+            console.log(database);
+            alert('signup successful')
+        }
+
+
+    }
+
+
+
+    localStorage.setItem('userObj', JSON.stringify({ name: 'dave', class: 'jss3b' }))
+
+
+
+    let theUserObjISaved = localStorage.getItem('userObj')
+
+
+    console.log(JSON.parse(theUserObjISaved), typeof JSON.parse(theUserObjISaved));
+
+    localStorage.removeItem('userObj')
+
+    console.log(theUserObjISaved);
+
+
+    localStorage.clear()
+
+
+</script>

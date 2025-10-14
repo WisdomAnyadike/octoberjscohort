@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <input type="text" oninput="search()">
+
+    <div id="preview">
+
+
+    </div>
+
+</body>
+
+</html>
+<script>
+
+
+    let products = ['rice', 'beans', 'onions', 'bread']
+
+    let variable = 'hello'
+    console.log(variable.split(''));
+
+
+    function displayProducts(p) {
+        preview.innerHTML = ''
+        p.forEach((product) => {
+            preview.innerHTML += `<p>  ${product} </p> `
+        })
+    }
+
+    displayProducts(products)
+
+
+    function search() {
+        let inputValue = document.querySelector('input').value.trim().replaceAll(' ', '')   // 'rice' 
+
+        let filteredProducts = products.filter((product) => {
+            return inputValue.split('').every((letter) => product.includes(letter))
+        })
+
+        console.log(filteredProducts);
+
+
+        if (filteredProducts.length === 0) {
+            preview.innerHTML = 'product does not exist'
+        } else {
+            displayProducts(filteredProducts)
+        }
+
+    }
+
+
+
+
+
+
+</script>
