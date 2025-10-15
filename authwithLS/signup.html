@@ -9,6 +9,19 @@
         integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
     <title>Document</title>
     <link rel="stylesheet" href="./css/signup.css">
+    <style>
+        table,
+        th,
+        tr,
+        td,
+        thead,
+        tbody {
+            border: 1px solid blue;
+            border-collapse: collapse;
+            padding: 10px;
+
+        }
+    </style>
 </head>
 
 <body>
@@ -51,17 +64,33 @@
 
 
 
-        <input type="button" value="Sign Up" onclick="submitForm()">
+        <input type="button" value="Sign Up" onclick="submitForm()" >
         <div class="form-bottom">
             <a href="#">Forgot Password?</a>
         </div>
     </form>
+    <div style="height: 100vh; width: 100%; background-color: white; margin-top: 100px;">
+
+        <table>
+            <thead>
+                <th> s/n</th>
+                <th> username </th>
+                <th> email</th>
+                <th> password</th>
+            </thead>
+            <tbody id="tbody">
+
+            </tbody>
+        </table>
+
+    </div>
 </body>
 
 </html>
 <script>
-    let database = []
 
+    let database = JSON.parse(localStorage.getItem('databaseOctober')) || []
+    displayUsers()
     function submitForm(params) {
 
         let usersName = namee.value.trim()
@@ -85,8 +114,6 @@
 
 
         else {
-
-
             let userObj = {
                 username: usersName,
                 email: usersMail,
@@ -94,8 +121,11 @@
             }
 
             database.push(userObj)
-            console.log(database);
+
+            localStorage.setItem('databaseOctober', JSON.stringify(database))
+            displayUsers()
             alert('signup successful')
+            location.href = 'login.html'
         }
 
 
@@ -103,21 +133,34 @@
 
 
 
-    localStorage.setItem('userObj', JSON.stringify({ name: 'dave', class: 'jss3b' }))
+
+    function displayUsers() {
+        tbody.innerHTML = ''
+        database.forEach((obj, i) => {
+            tbody.innerHTML += ` <tr>
+                    <td> ${i + 1} </td>
+                    <td> ${obj.username} </td>
+                    <td> ${obj.email}</td>
+                    <td> ${obj.password}</td>
+                </tr>`
+        })
+    }
 
 
-
-    let theUserObjISaved = localStorage.getItem('userObj')
-
-
-    console.log(JSON.parse(theUserObjISaved), typeof JSON.parse(theUserObjISaved));
-
-    localStorage.removeItem('userObj')
-
-    console.log(theUserObjISaved);
+    // localStorage.setItem('userObj', JSON.stringify({ name: 'dave', class: 'jss3b' }))
 
 
-    localStorage.clear()
+    // let theUserObjISaved = localStorage.getItem('userObj')
+
+
+    // console.log(JSON.parse(theUserObjISaved), typeof JSON.parse(theUserObjISaved));
+
+    // localStorage.removeItem('userObj')
+
+    // console.log(theUserObjISaved);
+
+
+    // localStorage.clear()
 
 
 </script>

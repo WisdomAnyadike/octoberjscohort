@@ -5,15 +5,61 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="./css/signup.css">
 </head>
 
 <body>
+    <form class="form">
+        <h1>Login </h1>
+        <div class="form-group">
+            <input type="email" placeholder=" " id="email">
+            <label for="email">Email</label>
+            <div class="error">
+                <i class="fas fa-exclamation-circle"></i>
+            </div>
+        </div>
+        <div class="form-group">
+            <input type="password" placeholder=" " id="password">
+            <label for="password">Password</label>
+            <div class="error">
+                <i class="fas fa-exclamation-circle"></i>
+            </div>
+        </div>
 
+
+
+
+        <input type="button" value="Log In" onclick="submitForm()">
+        <div class="form-bottom">
+            <a href="#">Forgot Password?</a>
+        </div>
+    </form>
 </body>
 
 </html>
 <script>
 
 
-    localStorage.setItem('token', 'fdoey8t7898')
+
+    function submitForm(params) {
+        let email = document.getElementById("email").value.trim()
+        let password = document.getElementById("password").value.trim()
+        let users = JSON.parse(localStorage.getItem('databaseOctober')) || []
+
+        let founduser = users.find((user) => {
+            return user.email === email && user.password === password
+        })
+
+
+
+
+        if (founduser) {
+            alert(`Login successful welcome ${founduser.username}`)
+        }
+        else {
+            alert('Invalid login credentials')
+            location.href = 'dashboard.html'
+        }
+    }
+
 </script>
