@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1> welcome <span id="usersName"> loading.... </span></h1> <button onclick="logOut()"> logout </button>
+
+
+    <div>
+        <div> <input type="text" id="title" placeholder="enter title here"> </div>
+
+        <div> <input type="text" id="description" placeholder="enter description here"> </div>
+
+        <input type="file" id="picture" accept=".jpg,.mp4,.jpeg,.mov" onchange="pickPicture()">
+        <div> <img id="blogImg" width="50px" height="50px" alt=""> </div>
+
+        <button onclick="postBlog()"> post </button>
+    </div>
+
+
+    <div id="preview">
+
+
+
+    </div>
+
+</body>
+
+</html>
+<script>
+
+    let users = JSON.parse(localStorage.getItem('databaseOctober')) || [] //  let users = [obj , obj , obj , obj , obj]
+    let currentUserIndex = localStorage.getItem('loggedInUserIndex') // 4
+    let currentUser = users[currentUserIndex]
+
+
+    function checkUserAuth() {
+        if (!currentUser) {
+            alert('unauthorized')
+            location.href = 'login.html'
+        }
+    }
+
+    checkUserAuth()
+
+    function displayName(params) {
+        usersName.innerHTML = currentUser.username
+    }
+
+    displayName()
+
+
+    function logOut() {
+        let confirmLogout = window.confirm('are you sure you want to logout?')
+        if (confirmLogout) {
+            localStorage.removeItem('loggedInUserIndex')
+            location.href = 'login.html'
+        }
+    }
+
+
+
+
+    // let arr = ['wisdom', 'tolu', 'daniel']
+    // let nameIndex = 2
+    // arr[nameIndex]
+
+
+    function postBlog(params) {
+        if (!title.value.trim() || !description.value.trim() || !blogImg.src) {
+            alert('all fields are mandatory')
+        } else {
+
+
+
+        }
+
+    }
+
+
+    function pickPicture() {
+        let file = document.getElementById('picture').files[0]
+
+        if (!file) {
+            alert('please attach a file')
+            return
+        }
+
+        if (file.size / 1024 > 400) {
+            alert('file too large , make sure its less than 400kb')
+            return
+        }
+
+        const reader = new FileReader();
+        reader.readAsDataURL(file)
+
+        reader.addEventListener('load', (e) => {
+            let result = e.target.result
+            blogImg.src = result
+            console.log(result);
+
+        })
+
+
+
+
+
+
+
+
+
+
+
+
+    }
+
+</script>

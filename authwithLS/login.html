@@ -47,19 +47,24 @@
         let users = JSON.parse(localStorage.getItem('databaseOctober')) || []
 
         let founduser = users.find((user) => {
-            return user.email === email && user.password === password
+            return user.email === email
         })
-
-
-
-
-        if (founduser) {
-            alert(`Login successful welcome ${founduser.username}`)
+        if (!founduser) {
+            alert('user doesnt exist')
         }
         else {
-            alert('Invalid login credentials')
-            location.href = 'dashboard.html'
+            if (founduser.password === password) {
+                alert(`Login successful welcome ${founduser.username}`)
+                let loggedInUserIndex = users.findIndex((userObj, i) => { return userObj.email === founduser.email })
+                localStorage.setItem('loggedInUserIndex', loggedInUserIndex)
+                location.href = 'dashboard.html'
+            } else {
+                alert('incorrect username or password')
+            }
         }
     }
+
+
+
 
 </script>
