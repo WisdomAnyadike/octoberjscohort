@@ -26,7 +26,6 @@
     <div id="preview">
 
 
-
     </div>
 
 </body>
@@ -63,6 +62,7 @@
         }
     }
 
+    let blogDatabase = currentUser.blogs || []
 
 
 
@@ -74,13 +74,91 @@
     function postBlog(params) {
         if (!title.value.trim() || !description.value.trim() || !blogImg.src) {
             alert('all fields are mandatory')
+        } else if (blogDatabase.find((blogObj, i) => { return blogObj.title === title.value.trim() })) {
+            alert('blog title already exists')
         } else {
+            let blog = {
+                title: title.value.trim(),
+                description: description.value.trim(),
+                image: blogImg.src,
+                isLiked: false
+            }
+
+            blogDatabase.push(blog)
+            localStorage.setItem('databaseOctober', JSON.stringify(users))
+            displayBlogs()
+
 
 
 
         }
 
     }
+
+
+    displayBlogs()
+
+    function displayBlogs(params) {
+
+
+        preview.innerHTML = ''
+
+        if (blogDatabase.length === 0) {
+            preview.innerHTML = 'no blogs yet....'
+
+        } else {
+            blogDatabase.forEach((blog, i) => {
+                // function pickWhetherLikedOrUnliked() {
+                //     if (blog.isLiked) {
+                //         return 'UNLIKE'
+                //     } else {
+                //         return 'LIKE'
+                //     }
+                // }
+
+                preview.innerHTML += `
+                <p> ${blog.title} </p> 
+                <p> ${blog.description} </p>
+                <img width="200" height="200" src="${blog.image}"/>
+                <button onclick="helpLike( ${i})" > ${blog.isLiked ? "UNLIKE" : 'LIKE'} </button>
+                 <button onclick="deleteBlog(${i})" > delete </button>
+                `
+            });
+        }
+
+
+
+    }
+
+
+    function helpLike(index) {
+        // if (isBlogLiked) {
+        //     currentUser.blogs[index].isLiked = false
+        // } else {
+        //     currentUser.blogs[index].isLiked = true
+        // }
+
+        currentUser.blogs[index].isLiked = !currentUser.blogs[index].isLiked
+        localStorage.setItem('databaseOctober', JSON.stringify(users))
+        displayBlogs()
+        console.log(currentUser, isBlogLiked);
+
+
+
+    }
+
+    function deleteBlog(index) {
+        let canDelete = confirm('are you sure you want to delete')
+
+        if (canDelete) {
+            currentUser.blogs.splice(index, 1)
+            localStorage.setItem('databaseOctober', JSON.stringify(users))
+            displayBlogs()
+        }
+
+    }
+
+
 
 
     function pickPicture() {
@@ -118,5 +196,24 @@
 
 
     }
+
+
+
+    let obj = {
+        name: 'dave',
+        isliked: true
+    }
+
+
+    obj.isliked = !obj.isliked
+
+
+    let arr = [1, 24, 465]
+
+    arr.find((num) => { return num === 24 })
+
+    arr.splice(1, 1)
+
+
 
 </script>
