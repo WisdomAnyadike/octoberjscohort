@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1> sign up</h1>
+    <form>
+        <label for="eventName">Event Name:</label>
+        <input type="text" id="eventName" name="eventName" required><br><br>
+
+        <label for="eventDate">Event Date:</label>
+        <input type="date" id="eventDate" name="eventDate" required><br><br>
+
+        <label for="eventTime">Event Time:</label>
+        <input type="time" id="eventTime" name="eventTime" required><br><br>
+
+        <input id="eventButton" type="button" value="Submit" onclick="collectDetails()">
+
+    </form>
+
+    <h1 id="number"> 5 </h1>
+
+    <input type="number" id="myInput">
+    <button onclick="startCountDown()"> start </button>
+
+</body>
+
+</html>
+<script>
+
+
+    // setTimeout 
+    setTimeout(function () {
+        console.log('hello');
+
+    }, 5000)
+
+
+    function collectDetails() {
+        eventButton.value = "Loading.."
+        eventButton.disabled = true
+        setTimeout(() => {
+            if (!eventName.value.trim() || !eventDate.value.trim() || !eventTime.value.trim()) {
+                alert('all fields are mandatory')
+
+            } else {
+                let eventDetails = {
+                    Name: eventName.value.trim(),
+                    Date: eventDate.value.trim(),
+                    Time: eventTime.value.trim()
+                }
+                alert('event details collected successfully')
+
+                console.log(eventDetails);
+            }
+            eventButton.value = "Submit"
+            eventButton.disabled = false
+        }, 3000);
+    }
+
+
+
+
+
+
+    let decreaser = setInterval(() => {
+        let value = +(number.innerHTML) //20
+        value--
+        number.innerHTML = value
+
+        if (value === 0) {
+            number.innerHTML = value
+            clearInterval(decreaser)
+        }
+
+
+    }, 2000);
+
+
+    function startCountDown() {
+        let theInput = document.getElementById('myInput') // input tag
+        let inputVal = +(theInput.value) //20
+
+        let countDown = setInterval(() => {
+            if (inputVal === 0) {
+                theInput.value = inputVal
+                alert('time up!')
+                clearInterval(countDown)
+                return
+            }
+
+            inputVal-- // inputVal = 19
+            theInput.value = inputVal
+
+        }, 1000);
+
+    }
+
+</script>

@@ -178,6 +178,8 @@
         reader.readAsDataURL(file)
 
         reader.addEventListener('load', (e) => {
+            console.log(e);
+
             let result = e.target.result
             blogImg.src = result
             console.log(result);
