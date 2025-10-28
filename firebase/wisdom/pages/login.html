@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Log in</title>
+    <link rel="stylesheet" href="../css/style.css" />
+    <script src="https://www.gstatic.com/firebasejs/12.4.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/12.4.0/firebase-auth-compat.js"></script>
+</head>
+
+<body data-page="login">
+    <div class="container">
+        <div class="card form">
+            <div class="brand">
+
+                <div>
+                    <div style="font-weight:700">Welcome back</div>
+                </div>
+            </div>
+
+            <h1>Log in</h1>
+            <p class="lead">Sign in to access your dashboard.</p>
+
+            <form id="login-form" class="card">
+                <div>
+                    <label for="li-email">Email</label>
+                    <input id="li-email" type="email" placeholder="you@example.com" required />
+                </div>
+
+                <div>
+                    <label for="li-pass">Password</label>
+                    <input id="li-pass" type="password" placeholder="Your password" required />
+                </div>
+
+                <div class="actions">
+                    <button type="button" id="submitbutton" onclick="login()" class="primary">Log in</button>
+                    <div class="muted">No account? <button type="button" id="to-signup" class="ghost"
+                            onclick="(location.href = '../index.html')">Create one</button></div>
+                </div>
+
+                <div id="login-msg" class="error" role="alert" aria-live="polite"></div>
+            </form>
+
+
+        </div>
+    </div>
+</body>
+
+</html>
+<script src="../js/signup.js"></script>
