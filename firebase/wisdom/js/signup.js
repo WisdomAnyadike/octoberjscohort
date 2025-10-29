@@ -33,10 +33,25 @@ function signUp() {
         firebase.auth().createUserWithEmailAndPassword(email, password)
             .then((userCredential) => {
                 var user = userCredential.user;
-                console.log(user);
-                alert('sign up successful')
-                setLoading(false)
-                location.href = './pages/login.html'
+
+                user.updateProfile({
+                    displayName: username,
+                }).then(() => {
+                    console.log(user);
+                    alert('sign up successful')
+                    setLoading(false)
+                    location.href = './pages/login.html'
+                }).catch((error) => {
+                   console.log(user);
+                    alert('sign up successful , couldnt update your full name')
+                    setLoading(false)
+                    location.href = './pages/login.html'
+                });
+
+
+
+
+
             })
             .catch((error) => {
                 var errorCode = error.code;

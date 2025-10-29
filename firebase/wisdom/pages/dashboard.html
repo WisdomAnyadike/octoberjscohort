@@ -1,59 +1,67 @@
 <!doctype html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title> Dashboard </title>
   <link rel="stylesheet" href="../css/style.css" />
+  <script src="https://www.gstatic.com/firebasejs/12.4.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/12.4.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/12.4.0/firebase-database-compat.js"></script>
 </head>
+
 <body data-page="dashboard">
   <div class="container">
-    <div class="card" style="width:100%; height: 95vh;">
- <div class="dash-header">
+    <div class="card" style="width:100%; min-height: 95vh; height: fit-content;">
+      <div class="dash-header">
         <div>
-          <div style="font-size:13px;color:var(--muted)">Logged in as</div>
+          <div style="font-size:13px;color:var(--muted)">Logged in as <span id="usersName"> loading... </span></div>
         </div>
 
         <div style="display:flex;flex-direction:column;gap:8px;align-items:flex-end">
-        
+
           <div style="display:flex;gap:8px">
-            <button id="logout" class="primary">Log out</button>
+            <button id="logout" class="primary" onclick="logOut()">Log out</button>
           </div>
         </div>
       </div>
 
-        <div class="card-grid" style="margin-top:16px">
+      <div class="card-grid" style="margin-top:16px">
         <div class="small-card">
           <div style="font-size:13px;color:var(--muted)">Javascript class group</div>
 
           <div style="font-weight:700;margin-top:8px"> Start Chat </div>
 
-          <div class="muted" style="margin-top:8px">   
+          <div class="muted" style="margin-top:8px">
           </div>
         </div>
 
-     
+
       </div>
 
 
       <div class="chat-wrap">
         <h3 style="margin:8px 0 0">Chat</h3>
-        <p class="muted" style="margin:0 0 8px">Messages you send appear on the right; other users appear on the left. </p>
+        <p class="muted" style="margin:0 0 8px">Messages you send appear on the right; other users appear on the left.
+        </p>
 
         <div id="chat-window" class="chat-window" aria-live="polite" aria-atomic="false">
-         
+
         </div>
 
         <div class="chat-input-row">
           <textarea id="chat-input" placeholder="Write a message... (Enter to send)"></textarea>
-          <button id="chat-send" class="primary">Send</button>
+          <button id="chat-send" class="primary" onclick="sendMssg()">Send</button>
         </div>
       </div>
 
-    
+
     </div>
   </div>
 
 
 </body>
+
 </html>
+<script src="../js/dashboard.js"> </script>
