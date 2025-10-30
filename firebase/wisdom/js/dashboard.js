@@ -11,15 +11,18 @@ const firebaseConfig = {
 const app = firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 const database = firebase.database();
+let chatIndex
 
 
 function authenticateUser(params) {
+    document.getElementById('chat-send').disabled = true
     auth.onAuthStateChanged((user) => {
         if (user) {
             // let usersName = document.getElementById('usersName')
             var uid = user.uid;
             console.log(user);
-            usersName.innerHTML = user.displayName
+            document.getElementById('chat-send').disabled = false
+            usersName.innerHTML = user.displayName || 'User'
 
         } else {
             location.href = './login.html'
@@ -46,7 +49,8 @@ function logOut(params) {
 }
 
 function sendMssg(params) {
-    let chatText = document.getElementById('chat-input').value.trim()
+    let chatInput = document.getElementById('chat-input')
+    let chatText = chatInput.value.trim() // 'fghkbv'
     let user = firebase.auth().currentUser
 
     if (!user) {
@@ -60,18 +64,83 @@ function sendMssg(params) {
     }
 
 
+    if (isNaN(chatIndex)) {
+        alert('please try again later')
+        return
+    }
 
-    database.ref(`chats/0`).set({
-        sender: 'nuel',
-        time: '10:40',
-        message: chatText
+
+
+    database.ref(`chats/${chatIndex}`).set({
+        sender: auth.currentUser.displayName,
+        time: new Date().toLocaleTimeString(),
+        message: chatText,
+        isDeleted: false
     }).then(() => {
-     
-        alert('success')
+        chatInput.value = ''
     }).catch(() => {
         alert('failed to send')
     })
 
 
+
+}
+
+
+
+function displayMessages() {
+    database.ref('chats').on('value', (snapshot) => {
+        const data = snapshot.val() || []
+        console.log(data.length);
+        chatIndex = data.length
+
+
+        console.log(data);
+
+        document.getElementById('chat-window').innerHTML = ''
+
+        data.forEach((chat, i) => {
+            let isMe = auth.currentUser.displayName === chat.sender // true or false
+            let messageClass = isMe ? 'me' : 'other'
+            let isDeleted = chat.isDeleted
+            let button = isMe && !isDeleted ? `<button> edit </button>` : ''
+
+
+
+            document.getElementById('chat-window').innerHTML += `
+            <p class="message ${messageClass}" ondblclick="deleteMessage(${i} , ${isMe} , ${isDeleted})" >
+            <b>${chat.sender.startsWith('Unkn') ? `${chat.sender.slice(0, 17)}..` : chat.sender}  </b>  ${chat.time} <br>
+               ${isDeleted ? "this message has been deleted" : chat.message}  
+           ${button}
+          </p>
+            `
+        });
+
+
+    });
+}
+
+displayMessages()
+
+
+function deleteMessage(index, isMyMessage, isDeleted) {
+    if (isDeleted) {
+        alert('cant delete a deleted message')
+        return
+    }
+
+    if (!isMyMessage) {
+        alert('unauthorized')
+        return
+    }
+
+    let canDelete = confirm('are you sure you want to delete?')
+    if (canDelete) {
+        database.ref(`chats/${index}`).update({ isDeleted: true }).then(() => {
+        }).catch((err) => {
+            alert(err.message)
+        })
+
+    }
 
 }
